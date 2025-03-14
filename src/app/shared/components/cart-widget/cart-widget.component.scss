@@ -1,3 +1,4 @@
+@use '../../../../assets/styles/mixins' as *;
 .cart-widget {
   padding-top: 0;
   display: flex;
@@ -26,6 +27,13 @@
     transform: translateX(0);
     opacity: 1;
     visibility: visible;
+    position: fixed;
+    top: 0;
+    height: 100vh;
+    width: 30%;
+    @include  screen-media-max(md){
+       width: 100%;
+      }
   }
 
   .header {
