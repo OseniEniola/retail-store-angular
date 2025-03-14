@@ -1,0 +1,22 @@
+<div class="card-wrap">
+    <div class="content-wrap">
+        <div class="product-img" [ngClass]="{'fallbackImg':isUsingFallback}" [ngStyle]="{'background-image': 'url(' +  this.backgroundImage + ')'}"></div>
+        <div class="detials-wrap">
+            <h3 [title]="product.title" class="name">{{ product.title }}</h3>
+            <span [class]="'rating rate-' + fullStars">
+                <div>
+                    <i *ngFor="let i of [].constructor(5); let index = index" 
+                       [ngClass]="{
+                           'rate-1': index < fullStars,
+                           'bi-star-fill': index < fullStars,
+                           'bi-star': index >= fullStars
+                       }" class="bi"></i>
+                </div>
+                <span>{{ product.rating.count }} review{{product.rating.count > 1 && 's'}}</span>
+            </span>
+            <p [title]="product.description" class="desc">{{ product.description }}</p>
+            <p class="price">{{ product.price | currency:'$' }}</p>
+            <button (click)="addToCart()" class="cta">Add to cart</button>
+        </div>
+    </div>
+</div>

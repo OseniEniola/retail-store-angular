@@ -1,0 +1,36 @@
+.page-wrapper{
+    .background_img {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        background-repeat: no-repeat;
+        background-size: cover;
+      }
+      .bubble_bg {
+        background-image: url(../assets/images/background-images/bubble_background.png);
+        mix-blend-mode: screen;
+        z-index: 2;
+        background-color: var(--background-color-1);
+        background-attachment: fixed; 
+        background-position: center center;
+        background-size: cover;
+      }
+      
+      .light_bg {
+        background-image: url(../assets/images/background-images/light_background.png);
+        mix-blend-mode: soft-light;
+        backdrop-filter: blur(120px);
+        background-color: var(--background-color-1);
+        background-attachment: fixed; 
+        background-position: center center; 
+        background-size: cover;
+      }
+      .content-wrapper{
+        position: relative;
+        z-index: 3;
+
+      
+      }
+}

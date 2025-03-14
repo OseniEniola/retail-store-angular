@@ -1,0 +1,10 @@
+<div class="content-wrapper">
+    <img class="logo" src="/assets/images/invendis_logo.png" alt="invendis_logo" srcset="">
+    <div class="icons">
+        <i class="bi bi-cart" (click)="isCartOpen =!isCartOpen"><span *ngIf="cartItemCount > 0" class="cart-count">{{cartItemCount}}</span></i>
+        <div class="profile">
+            <i class="bi bi-person"></i>
+        </div>
+    </div>
+    <app-cart-widget [ngClass]="{'open':isCartOpen}" (closeCart)="closeCart()" [isCartOpen]="isCartOpen"></app-cart-widget>
+</div>

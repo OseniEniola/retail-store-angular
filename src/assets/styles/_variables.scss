@@ -1,0 +1,32 @@
+
+
+:root{
+
+    --primary-color: #007BFF;
+    --white: #FFFFFF;
+    --deep-blue: #004085;
+
+    //Text Colors
+    --text-color-1: #333333;
+    --text-color-2: #6c757d;
+
+    //Colors
+    --yellow-star: #FFD700;
+    --red: #df0a0ad9;
+
+    //Background Colors
+    --bg-color-pri: #f2f5f7;
+    --bg-color-2: #e5e8ea;
+
+}
+
+//Responsive Breakpoints
+$xs: 375px;
+$xs1: 410px;
+$sm: 576px;
+$md: 768px;
+$lg: 992px;
+$xl: 1200px;
+$xxl: 1400px;
+$xxxl: 1600px;
+
