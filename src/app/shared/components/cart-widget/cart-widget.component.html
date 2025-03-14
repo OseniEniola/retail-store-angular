@@ -45,7 +45,7 @@
         <div class="total-wrap">
             <div class="total">
                 <span>Total:</span>
-                <div class="price">{{totalPrice - discountAmount | currency:'$'}}</div>
+                <div class="price">{{totalPrice - (discountAmount ||0) | currency:'$'}}</div>
             </div>
             <button class="checkout-btn">Checkout</button>
         </div>
