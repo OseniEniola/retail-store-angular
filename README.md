@@ -22,6 +22,23 @@ Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.
 
 Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
 
-## Further help
+## Features and Technologies Used
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+- **Angular**: Frontend framework for building dynamic and scalable applications.
+- **RxJS**: Used for reactive programming to manage async data and events.
+- **Karma and Jasmine**: Used for running unit tests in the application.
+- **Debounced Search**: A product search feature with debouncing to optimize the performance of searching through a large product list.
+- **Network Service**: Tracks network connectivity to provide offline and online status indicators in the application.
+- **Discount Codes**: Applied a flat or percentage discount on cart items based on user input.
+- **Lazy Loading**: Some modules are lazily loaded to enhance application performance.
+- **Responsive Design**: The application is fully responsive across all devices (mobile, tablet, and desktop).
+- **LocalStorage Caching**: Data caching using LocalStorage for better performance and offline support.
+- **Angular SSR (Server-Side Rendering)**: Utilized Angular's SSR capabilities for faster page loads and better SEO optimization.
+- **Reusable Components**: Modular and reusable components have been created to ensure maintainability and scalability.
+
+## Setting up for Development
+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/OseniEniola/retail-store-angular
+   cd SavannahTechApp

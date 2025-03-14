@@ -11,7 +11,10 @@
             <div class="details">
                 <div [title]="item.product.title" class="title">{{item.product.title}}</div>
                 <div class="cat">{{item.product.category}}</div>
-                <div class="price">{{item.quantity}} x {{item.product.price | currency:'$'}}</div>
+                <div class="price-wrap">
+                    <div class="price">{{item.quantity}} x {{item.product.price | currency:'$'}}</div>
+                    <div class="price-total">{{item.quantity * item.product.price | currency:'$'}}</div>
+                </div>
             </div>
             <div class="cta-wrap">
                 <button (click)="removeItemFromCart(item)" class="remove-btn bi bi-trash"></button>
