@@ -1,6 +1,7 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
 import { CartItems, DiscountCode, discountCodes } from '../../models';
 import { CartService } from '../../../core';
+import { HotToastService } from '@ngxpert/hot-toast';
 
 @Component({
   selector: 'app-cart-widget',
@@ -10,6 +11,10 @@ import { CartService } from '../../../core';
 export class CartWidgetComponent {
   @Input() isCartOpen: boolean = false;
   @Output() closeCart = new EventEmitter<boolean>();
+
+
+  private toastService = inject(HotToastService);
+
 
   cartItems: CartItems[] = [];
   totalPrice: number = 0;
@@ -37,6 +42,8 @@ export class CartWidgetComponent {
 
   removeItemFromCart(item: CartItems) {
     this.cartService.removeFromCart(item);
+    this.toastService.info("Item removed")
+
   }
 
   closeCartWidget() {
@@ -46,15 +53,24 @@ export class CartWidgetComponent {
   clearCart() {
     this.cartService.clearCart();
     this.closeCartWidget();
+    this.toastService.info("Cart cleared")
+
   }
 
   validateDiscountCode(code: string) {
+    if(code.length < 1){
+      this.toastService.info("Enter a valid code")
+
+    }
     let discount = discountCodes.find(
       (discountCode) => discountCode.code.toLowerCase() === code.toLowerCase()
     );
     if(discount){
       this.discountObj = discount
       this.applyDiscountCode();
+      this.toastService.info("Discount applied")
+    }else{
+      this.toastService.success("Discount code not valid")
     }
   }
   applyDiscountCode() {

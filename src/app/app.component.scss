@@ -30,7 +30,13 @@
       .content-wrapper{
         position: relative;
         z-index: 3;
-
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
       
+      }
+
+      app-footer{
+        margin-top: auto;
       }
 }

@@ -79,11 +79,12 @@
                   }
                 app-product-card{
                     width: 23.5%;
-                    @include  screen-media-max(md){
-                        width: 47%;
-                      }
+                   
                       @include  screen-media-max(lg){
                         width: 48.5%;
+                      }
+                      @include  screen-media-max(md){
+                        width: 47%;
                       }
                 }
             }
@@ -143,6 +144,7 @@
             color: var(--text-color-1);
             margin: auto;
             text-align: center;
+            margin-top: 2rem;
         }
     }
     
