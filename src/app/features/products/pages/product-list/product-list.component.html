@@ -1,0 +1,28 @@
+<div class="page-wrapper">
+    <div class="teaser-wrap">
+        <h1>Explore Our Latest Products</h1>
+        <h5>Discover top-rated items at unbeatable prices. Add to your cart now!</h5>
+
+        <button>View products</button>
+    </div>
+
+    <div class="page-content">
+        <div class="search-wrap">
+            <h1>Product List: {{productList.length || 0}} items</h1>
+            <div class="search-bar">
+                <i class="bi bi-search"></i>
+                <input type="text" placeholder="Search products" (keyup)="filterProducts($event)" />
+            </div>
+        </div>
+
+        <div *ngIf="productList.length > 0" class="product-list">
+            <app-loading-spinner *ngIf="isLoading || isSearching"></app-loading-spinner>
+            <div class="wrapper" *ngIf="!isSearching ">
+                <app-product-card *ngFor="let product of productList" [product]="product"></app-product-card>
+            </div>
+        </div>
+        <div class="no-data" *ngIf="productList.length === 0 && !isLoading">
+            No product available
+        </div>
+    </div>
+</div>

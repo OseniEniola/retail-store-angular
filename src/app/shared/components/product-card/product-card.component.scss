@@ -1,0 +1,110 @@
+@use "../../../../assets/styles/mixins" as *;
+.card-wrap {
+  width: 100%;
+  height: auto;
+  background-color: var(--white);
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+
+  .content-wrap {
+    width: 100%;
+    height: 100%;
+
+    .product-img {
+      height: 14rem;
+      width: 100%;
+      background-size: 40%;
+      background-position: center;
+      background-repeat: no-repeat;
+      border-radius: 4px;
+      mix-blend-mode: multiply;
+      background-color: var(--bg-color-pri);
+      background-blend-mode: darken;
+      @include  screen-media-max(md){
+        height: 10rem;
+        background-size: 60%;
+      }
+      @include  screen-media-max(xl){
+        background-size: 65%;
+      }
+      @include  screen-media-max(lg){
+        background-size: 50%;
+        height: 14rem;
+      }
+      &.fallbackImg {
+        background-size: cover;
+      }
+    }
+
+    .detials-wrap {
+      padding: 1rem;
+
+      h3 {
+        font-size: 1.45rem;
+        color: var(--text-color-1);
+        margin: 0;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        cursor: pointer;
+        @include  screen-media-max(md){
+          font-size: 1rem
+        }
+      }
+      p {
+        font-size: 0.7rem;
+        color: var(--text-color-2);
+        margin: 0.5rem 0;
+        font-weight: 400;
+        overflow: hidden;
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        line-height: 1.4;
+      }
+      .rating {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        @include  screen-media-max(md){
+         font-size: 0.55rem;
+        }
+
+        i {
+          color: var(--bg-color-2);
+        }
+
+        .bi-star {
+          color: var(--bg-color-2);
+        }
+        .bi-star-fill {
+          color: var(--yellow-star);
+        }
+
+        span {
+          font-size: 0.7rem;
+          color: var(--text-color-2);
+        }
+      }
+      .price {
+        font-size: 1.5rem;
+        color: var(--primary-color);
+        font-weight: bold;
+        margin-top: 0.3rem;
+      }
+
+      .cta {
+        width: fit-content;
+        padding: 0.6rem 1.2rem;
+        border-radius: 7px;
+        font-size: 0.77rem;
+        border: none;
+        background-color: var(--deep-blue);
+        color: var(--white);
+        font-weight: 400;
+        margin-top: 0.2rem;
+        cursor: pointer;
+      }
+    }
+  }
+}

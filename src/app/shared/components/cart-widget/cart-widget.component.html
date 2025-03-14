@@ -1,0 +1,51 @@
+<div class="cart-widget" [ngClass]="{'open': isCartOpen}">
+    <div class="header">
+        <button title="Close" class="back bi bi-arrow-bar-left" (click)="closeCartWidget()"></button>
+        <span>Cart</span>
+        <button (click)="clearCart()" title="Clear cart" class="clear-btn bi bi-trash"></button>
+    </div>
+
+    <div class="items-wrap">
+        <div class="cart-item" *ngFor="let item of cartItems">
+            <div class="product-img" [ngStyle]="{'background-image': 'url(' + item.product.image + ')'}"></div>
+            <div class="details">
+                <div [title]="item.product.title" class="title">{{item.product.title}}</div>
+                <div class="cat">{{item.product.category}}</div>
+                <div class="price">{{item.quantity}} x {{item.product.price | currency:'$'}}</div>
+            </div>
+            <div class="cta-wrap">
+                <button (click)="removeItemFromCart(item)" class="remove-btn bi bi-trash"></button>
+                <div class="quantity">
+                    <button (click)="decreaseQuantity(item)" class="bi bi-dash-lg"></button>
+                    <span>{{item.quantity}}</span>
+                    <button (click)="increaseQuantity(item)" class="bi bi-plus-lg"></button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        <div class="promo">
+            <input [(ngModel)]="discountCode" type="text" placeholder="Enter promo code" />
+            <button (click)="validateDiscountCode(discountCode)">Apply</button>
+        </div>
+        <div class="breakdown">
+            <div class="item">
+                <span>Subtotal:</span>
+                <div class="price">{{totalPrice | currency:'$'}}</div>
+            </div>
+            <div class="item">
+                <span>Discount:</span>
+                <div class="price">{{discountAmount > 0 ? '-': ''}} {{discountAmount || 0 | currency:'$'}}</div>
+            </div>
+        </div>
+        <div class="total-wrap">
+            <div class="total">
+                <span>Total:</span>
+                <div class="price">{{totalPrice - discountAmount | currency:'$'}}</div>
+            </div>
+            <button class="checkout-btn">Checkout</button>
+        </div>
+
+    </div>
+</div>
