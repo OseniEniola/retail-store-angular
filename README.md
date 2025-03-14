@@ -26,8 +26,8 @@ Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To u
 
 - **Angular**: Frontend framework for building dynamic and scalable applications.
 - **RxJS**: Used for reactive programming to manage async data and events.
-- **Karma and Jasmine**: Used for running unit tests in the application.
-- **Debounced Search**: A product search feature with debouncing to optimize the performance of searching through a large product list.
+- **Karma**: Used for running unit tests in the application.
+- **Debounced Search with loadash**: A product search feature with debouncing to optimize the performance of searching through a large product list.
 - **Network Service**: Tracks network connectivity to provide offline and online status indicators in the application.
 - **Discount Codes**: Applied a flat or percentage discount on cart items based on user input.
 - **Lazy Loading**: Some modules are lazily loaded to enhance application performance.
@@ -35,6 +35,10 @@ Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To u
 - **LocalStorage Caching**: Data caching using LocalStorage for better performance and offline support.
 - **Angular SSR (Server-Side Rendering)**: Utilized Angular's SSR capabilities for faster page loads and better SEO optimization.
 - **Reusable Components**: Modular and reusable components have been created to ensure maintainability and scalability.
+- **Fake Store API**: Data for products is fetched from [https://fakestoreapi.com](https://fakestoreapi.com).
+- **Cart Service**: A service for managing cart items, including adding, removing, and updating quantities of products in the cart.
+- **Product Service**: A service for fetching product data from the Fake Store API.
+
 
 ## Setting up for Development
 
