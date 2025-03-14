@@ -60,7 +60,7 @@ export class CartWidgetComponent {
   validateDiscountCode(code: string) {
     if(code.length < 1){
       this.toastService.info("Enter a valid code")
-
+      return
     }
     let discount = discountCodes.find(
       (discountCode) => discountCode.code.toLowerCase() === code.toLowerCase()
