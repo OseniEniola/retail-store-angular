@@ -17,7 +17,7 @@ export class CartWidgetComponent {
   discountCode: string = "";
   discountObj: DiscountCode = {} as DiscountCode;
 
-  constructor(private cartService: CartService) {
+  constructor(public cartService: CartService) {
     this.cartService.getCartItems().subscribe((items: CartItems[]) => {
       this.cartItems = items;
       this.totalPrice = this.cartService.calculateCartTotal();
