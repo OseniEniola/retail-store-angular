@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { CartService } from '../../../core';
 import { CartItems } from '../../models';
 
@@ -16,7 +16,7 @@ export class NavBarComponent implements OnInit {
 
   ngOnInit() {
     this.cartService.getCartItems().subscribe((items: CartItems[]) => {
-      this.cartItemCount = items.reduce((total, item) => total + item.quantity, 0);
+      this.cartItemCount = items.length;
     });
   }
 

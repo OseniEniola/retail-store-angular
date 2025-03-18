@@ -10,11 +10,20 @@ import { Product } from '../../models';
 import { CartService } from '../../../core';
 import { HotToastService } from '@ngxpert/hot-toast';
 import { isPlatformBrowser } from '@angular/common';
+import { animate, style, transition, trigger } from '@angular/animations';
 
 @Component({
   selector: 'app-product-card',
   templateUrl: './product-card.component.html',
   styleUrl: './product-card.component.scss',
+  animations: [
+    trigger('fadeIn', [
+      transition(':enter', [
+        style({ opacity: 0, transform: 'translateY(15px)' }),
+        animate('500ms ease-out', style({ opacity: 1, transform: 'translateY(0)' }))
+      ])
+    ])
+  ]
 })
 export class ProductCardComponent implements AfterViewInit {
   @Input() product: Product = {} as Product;
@@ -39,8 +48,8 @@ export class ProductCardComponent implements AfterViewInit {
   }
 
   addToCart() {
-    this.cartService.addToCart({ product: this.product, quantity: 1 });
-    this.toastService.success('Item added to cart');
+    const response =this.cartService.addToCart({ product: this.product, quantity: 1 });
+    response == 1 ? this.toastService.success('Item added to cart') : this.toastService.success('Item is already in cart');
   }
 
   checkImage(imgUrl: string) {

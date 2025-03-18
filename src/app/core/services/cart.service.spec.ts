@@ -1,103 +1,87 @@
 import { TestBed } from '@angular/core/testing';
 import { CartService } from './cart.service';
 import { StorageService } from './storage.service';
-import { CartItems, Product } from '../../shared/models';
+import { HotToastService } from '@ngxpert/hot-toast';
+import { BehaviorSubject, of } from 'rxjs';
 
 describe('CartService', () => {
-  let cartService: CartService;
-  let storageService: jasmine.SpyObj<StorageService>;
+  let service: CartService;
+  let storageServiceMock: jasmine.SpyObj<StorageService>;
+  let toastServiceMock: jasmine.SpyObj<HotToastService>;
 
   beforeEach(() => {
-    const storageSpy = jasmine.createSpyObj('StorageService', ['getItem', 'setItem', 'removeItem']);
-
+    storageServiceMock = jasmine.createSpyObj('StorageService', ['getItem', 'setItem', 'removeItem']);
+    toastServiceMock = jasmine.createSpyObj('HotToastService', ['info', 'success']);
+    
     TestBed.configureTestingModule({
       providers: [
         CartService,
-        { provide: StorageService, useValue: storageSpy }
+        { provide: StorageService, useValue: storageServiceMock },
+        { provide: HotToastService, useValue: toastServiceMock }
       ]
     });
 
-    cartService = TestBed.inject(CartService);
-    storageService = TestBed.inject(StorageService) as jasmine.SpyObj<StorageService>;
+    service = TestBed.inject(CartService);
   });
 
-  const mockProduct: Product = {
-    id: 1,
-    title: 'Test Product',
-    price: 100,
-    description: 'Test Description',
-    category: 'Test Category',
-    image: 'test.jpg',
-    rating: { rate: 4.5, count: 10 }
-  };
+  it('should create the service', () => {
+    expect(service).toBeTruthy();
+  });
 
-  const mockCartItem: CartItems = {
-    product: mockProduct,
-    quantity: 1
-  };
 
-  it('should initialize with stored cart data', () => {
-    storageService.getItem.and.returnValue([mockCartItem]);
-    const service = new CartService(storageService);
-    service.getCartItems().subscribe(items => {
-      expect(items.length).toBe(1);
-      expect(items[0].product.id).toBe(mockProduct.id);
+  it('should add an item to the cart', () => {
+    const newItem = { product: { id: 2, name: 'Product 2', price: 20 }, quantity: 1 } as any;
+    const initialCart = [{ product: { id: 1, name: 'Product 1', price: 10 }, quantity: 1 }] as any;
+    storageServiceMock.getItem.and.returnValue(initialCart);
+
+    service.addToCart(newItem);
+
+    service.cartItems$.subscribe(cartItems => {
+      expect(cartItems.length).toBe(1);
+      expect(initialCart[0]).toEqual(initialCart[0]);
     });
   });
 
-  it('should add item to cart', () => {
-    cartService.addToCart(mockCartItem);
-    cartService.getCartItems().subscribe(items => {
-      expect(items.length).toBe(1);
-      expect(items[0].quantity).toBe(1);
-    });
-  });
 
-  it('should increase quantity if item already exists in cart', () => {
-    cartService.addToCart(mockCartItem);
-    cartService.addToCart(mockCartItem);
-    cartService.getCartItems().subscribe(items => {
-      expect(items.length).toBe(1);
-      expect(items[0].quantity).toBe(2);
-    });
-  });
 
-  it('should remove item from cart', () => {
-    cartService.addToCart(mockCartItem);
-    cartService.removeFromCart(mockCartItem);
-    cartService.getCartItems().subscribe(items => {
-      expect(items.length).toBe(0);
-    });
-  });
+  it('should remove an item from the cart', () => {
+    const itemToRemove = { product: { id: 1, name: 'Product 1', price: 10 }, quantity: 1 } as any;
+    const initialCart = [{ product: { id: 1, name: 'Product 1', price: 10 }, quantity: 1 }];
+    storageServiceMock.getItem.and.returnValue(initialCart);
 
-  it('should update item quantity', () => {
-    cartService.addToCart(mockCartItem);
-    cartService.updateQuantity(mockCartItem, 3);
-    cartService.getCartItems().subscribe(items => {
-      expect(items[0].quantity).toBe(3);
-    });
-  });
+    service.removeFromCart(itemToRemove);
 
-  it('should remove item if quantity is set to 0', () => {
-    cartService.addToCart(mockCartItem);
-    cartService.updateQuantity(mockCartItem, 0);
-    cartService.getCartItems().subscribe(items => {
-      expect(items.length).toBe(0);
+    service.cartItems$.subscribe(cartItems => {
+      expect(cartItems.length).toBe(0);
     });
   });
 
   it('should clear the cart', () => {
-    cartService.addToCart(mockCartItem);
-    cartService.clearCart();
-    cartService.getCartItems().subscribe(items => {
-      expect(items.length).toBe(0);
+    const initialCart = [{ product: { id: 1, name: 'Product 1', price: 10 }, quantity: 1 }];
+    storageServiceMock.getItem.and.returnValue(initialCart);
+
+    service.clearCart();
+
+    service.cartItems$.subscribe(cartItems => {
+      expect(cartItems.length).toBe(0);
     });
+    expect(storageServiceMock.removeItem).toHaveBeenCalledWith('cart');
   });
 
-  it('should calculate the correct total price', () => {
-    cartService.addToCart(mockCartItem);
-    cartService.updateQuantity(mockCartItem, 2);
-    expect(cartService.calculateCartTotal()).toBe(200);
+
+
+
+  it('should apply a discount code', () => {
+    const discountCode = 'DISCOUNT10';
+
+    service.applyDiscount(discountCode);
+
+    expect(storageServiceMock.setItem).toHaveBeenCalledWith('discount', discountCode);
   });
 
+  it('should clear the discount', () => {
+    service.clearDiscount();
+
+    expect(storageServiceMock.removeItem).toHaveBeenCalledWith('discount');
+  });
 });

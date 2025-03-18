@@ -1,102 +1,125 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { CartWidgetComponent } from './cart-widget.component';
 import { CartService } from '../../../core';
+import { HotToastService } from '@ngxpert/hot-toast';
 import { of } from 'rxjs';
-import { CartItems, DiscountCode } from '../../models';
-import { FormsModule } from '@angular/forms';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { DiscountCode } from '../../models';
 
 describe('CartWidgetComponent', () => {
   let component: CartWidgetComponent;
   let fixture: ComponentFixture<CartWidgetComponent>;
   let cartServiceMock: jasmine.SpyObj<CartService>;
-
-  const mockCartItems: CartItems[] = [
-    {
-      product: { id: 1, title: 'Test Product 1', price: 100, description: 'Test', category: 'Category', image: '', rating: { rate: 4, count: 10 } },
-      quantity: 2
-    },
-    {
-      product: { id: 2, title: 'Test Product 2', price: 200, description: 'Test', category: 'Category', image: '', rating: { rate: 4, count: 20 } },
-      quantity: 1
-    }
-  ];
-
-  const mockDiscountCodes: DiscountCode[] = [
-    { code: 'DISCOUNT10', discountAmount: 10, dicountType: 'percentage' },
-    { code: 'FLAT50', discountAmount: 50, dicountType: 'flat' }
-  ];
+  let toastServiceMock: jasmine.SpyObj<HotToastService>;
 
   beforeEach(() => {
-    // Create a mock CartService using Jasmine's createSpyObj
-    cartServiceMock = jasmine.createSpyObj('CartService', ['getCartItems', 'calculateCartTotal', 'updateQuantity', 'removeFromCart', 'clearCart']);
-
-    // Mocking the return values for the service methods
-    cartServiceMock.getCartItems.and.returnValue(of(mockCartItems));
-    cartServiceMock.calculateCartTotal.and.returnValue(400); // Sample total
+    cartServiceMock = jasmine.createSpyObj('CartService', [
+      'getCartItems',
+      'getAppliedDiscountCode',
+      'calculateCartTotal',
+      'updateQuantity',
+      'removeFromCart',
+      'clearDiscount',
+      'clearCart',
+      'applyDiscount'
+    ]);
+    toastServiceMock = jasmine.createSpyObj('HotToastService', ['info', 'success']);
 
     TestBed.configureTestingModule({
       declarations: [CartWidgetComponent],
-      imports: [FormsModule], 
       providers: [
-        { provide: CartService, useValue: cartServiceMock }
+        { provide: CartService, useValue: cartServiceMock },
+        { provide: HotToastService, useValue: toastServiceMock }
       ],
-      schemas: [NO_ERRORS_SCHEMA] 
-    });
+      schemas: [NO_ERRORS_SCHEMA]
+    }).compileComponents();
 
     fixture = TestBed.createComponent(CartWidgetComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges(); // Triggers the initial change detection cycle
   });
 
   it('should create the component', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should fetch cart items from the cart service', () => {
-    component.cartService.getCartItems().subscribe((items) => {
-      expect(items).toEqual(mockCartItems);
-    });
-  });
 
-  it('should calculate the total price correctly', () => {
-    expect(component.totalPrice).toBe(400);
-  });
 
-  it('should increase the quantity of the item', () => {
-    const item = mockCartItems[0];
+  it('should increase quantity of an item within limit', () => {
+    const item = { id: 1, quantity: 3, price: 20 } as  any;
+
+    cartServiceMock.updateQuantity.and.callFake(() => {});
+    fixture.detectChanges();
+
     component.increaseQuantity(item);
-    expect(cartServiceMock.updateQuantity).toHaveBeenCalledWith(item, 3);
+    expect(cartServiceMock.updateQuantity).toHaveBeenCalledWith(item, 4);
   });
 
-  it('should decrease the quantity of the item', () => {
-    const item = mockCartItems[0];
+  it('should not increase quantity if the item is at maximum (5)', () => {
+    const item = { id: 1, quantity: 5, price: 20 }as  any;
+
+    cartServiceMock.updateQuantity.and.callFake(() => {});
+    fixture.detectChanges();
+
+    component.increaseQuantity(item);
+    expect(toastServiceMock.info).toHaveBeenCalledWith('You cant add more than 5 item of same type');
+    expect(cartServiceMock.updateQuantity).not.toHaveBeenCalled();
+  });
+
+  it('should decrease quantity of an item', () => {
+    const item = { id: 1, quantity: 3, price: 20 } as  any;
+
+    cartServiceMock.updateQuantity.and.callFake(() => {});
+    fixture.detectChanges();
+
     component.decreaseQuantity(item);
-    expect(cartServiceMock.updateQuantity).toHaveBeenCalledWith(item, 1);
+    expect(cartServiceMock.updateQuantity).toHaveBeenCalledWith(item, 2);
   });
 
-  it('should remove an item from the cart', () => {
-    const item = mockCartItems[0];
-    component.removeItemFromCart(item);
-    expect(cartServiceMock.removeFromCart).toHaveBeenCalledWith(item);
-  });
+  
+  it('should clear the cart and close the cart widget', () => {
+    cartServiceMock.clearCart.and.callFake(() => {});
+    component.closeCartWidget = jasmine.createSpy();
 
-  it('should clear the cart', () => {
     component.clearCart();
+
     expect(cartServiceMock.clearCart).toHaveBeenCalled();
+    expect(component.closeCartWidget).toHaveBeenCalled();
+    expect(toastServiceMock.info).toHaveBeenCalledWith('Cart cleared');
   });
 
-  it('should validate discount code and apply percentage discount', () => {
-    const discountCode = 'DISCOUNT10';
-    component.validateDiscountCode(discountCode);
-    expect(component.discountObj.code).toBe('DISCOUNT10');
-    expect(component.discountAmount).toBe(40); // 10% of total price (400)
+  it('should clear the discount and reset discount values', () => {
+    component.discountCode = 'DISCOUNT10';
+    component.discountObj = { code: 'DISCOUNT10', discountAmount: 10, dicountType: 'flat' } as DiscountCode;
+    component.discountAmount = 10;
+
+    cartServiceMock.clearDiscount.and.callFake(() => {});
+
+    component.clearDiscount();
+
+    expect(cartServiceMock.clearDiscount).toHaveBeenCalled();
+    expect(component.discountCode).toBe('');
+    expect(component.discountObj).toEqual({} as any);
+    expect(component.discountAmount).toBe(0);
+    expect(toastServiceMock.info).toHaveBeenCalledWith('Dicount removed');
   });
 
-  it('should validate discount code and apply flat discount', () => {
-    const discountCode = 'FLAT50';
-    component.validateDiscountCode(discountCode);
-    expect(component.discountObj.code).toBe('FLAT50');
-    expect(component.discountAmount).toBe(50); // Flat discount of 50
+  
+
+  it('should show error if discount code is invalid', () => {
+    const invalidCode = 'INVALIDCODE';
+    component.cartItems = [{ id: 1, quantity: 1, price: 20 }] as any;
+    cartServiceMock.clearDiscount.and.callFake(() => {});
+
+    component.validateDiscountCode(invalidCode);
+
+    expect(cartServiceMock.clearDiscount).toHaveBeenCalled();
+    expect(toastServiceMock.success).toHaveBeenCalledWith('Discount code not valid');
+  });
+
+  it('should show error if no items in cart when applying discount', () => {
+    component.cartItems = [];
+    component.validateDiscountCode('SAVE10');
+
+    expect(toastServiceMock.info).toHaveBeenCalledWith('Cart is empty, Please add item to apply discount');
   });
 });

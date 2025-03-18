@@ -1,151 +1,151 @@
-@use '../../../../../assets/styles/mixins' as *;
+@use "../../../../../assets/styles/mixins" as *;
 
-.page-wrapper{
-    padding: 1rem 2.5%;
-    //width: 100%;
-    
-    .teaser-wrap{
-        width: 60%;
-        margin: auto;
-        padding: 2rem;
-        //background-color: var(--white);
-        border-radius: 240px;
-        //box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        margin-top: 0.3rem;
-        text-align: center;
+.page-wrapper {
+  padding: 1rem 2.5%;
+  //width: 100%;
 
-        @include  screen-media-max(md){
-            width: 90%;
-            padding: 0;
-            margin-bottom: 1.3rem;
-        }
+  .teaser-wrap {
+    width: 60%;
+    margin: auto;
+    padding: 2rem;
+    //background-color: var(--white);
+    border-radius: 240px;
+    //box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-top: 0.3rem;
+    text-align: center;
 
-        h1{
-            font-size: 2rem;
-            font-weight: bold;
-            color: var(--primary-color);
-            margin: 0;
-        }
-        h5{
-            font-size: 1rem;
-            color: var(--text-color-2);
-            font-weight: 400;
-            margin: 0;
-        }
-
-        button{
-            width: fit-content;
-            padding: 0.6rem 1.2rem;
-            border-radius: 10px;
-            font-size: 0.8rem;
-            border: none;
-            background-color: var(--deep-blue);
-            color: var(--white);
-            font-weight: 500;
-            margin-top: 1rem;
-            cursor: pointer;
-            box-shadow: 0px 4px 10px rgba(0, 0, 255, 0.3); /* Blue shadow effect */
-            transition: box-shadow 0.3s ease-in-out;
-        }
-        
-        button:hover {
-            box-shadow: 0px 6px 14px rgba(0, 0, 255, 0.5); /* More intense shadow on hover */
-        }
+    @include screen-media-max(md) {
+      width: 90%;
+      padding: 0;
+      margin-bottom: 1.3rem;
     }
 
-    .page-content{
+    h1 {
+      font-size: 2rem;
+      font-weight: bold;
+      color: var(--primary-color);
+      margin: 0;
+    }
+    h5 {
+      font-size: 1rem;
+      color: var(--text-color-2);
+      font-weight: 400;
+      margin: 0;
+    }
+
+    button {
+      width: fit-content;
+      padding: 0.6rem 1.2rem;
+      border-radius: 10px;
+      font-size: 0.8rem;
+      border: none;
+      background-color: var(--deep-blue);
+      color: var(--white);
+      font-weight: 500;
+      margin-top: 1rem;
+      cursor: pointer;
+      box-shadow: 0px 4px 10px rgba(0, 0, 255, 0.3); /* Blue shadow effect */
+      transition: box-shadow 0.3s ease-in-out;
+    }
+
+    button:hover {
+      box-shadow: 0px 6px 14px rgba(0, 0, 255, 0.5); /* More intense shadow on hover */
+    }
+  }
+
+  .page-content {
+    display: flex;
+    flex-direction: column;
+    .product-list {
+      display: flex;
+      flex-wrap: wrap;
+      position: relative;
+      gap: 1.7rem;
+      min-height: 20rem;
+      margin-top: 1.7rem;
+      width: 100%;
+
+      .wrapper {
         display: flex;
-        flex-direction: column;
-        .product-list{
-            display: flex;
-            flex-wrap: wrap;
-            position: relative;
-            gap: 1.7rem;
-            min-height: 20rem;
-            margin-top: 1.7rem;
-            width: 100%;
-          
-            .wrapper{
-                display: flex;
-                flex-wrap: wrap;
-                position: relative;
-                gap: 1.7rem;
-                width: 100%;
-                @include  screen-media-max(md){
-                    gap: 1rem;
-                  }
-                  @include  screen-media-max(xl){
-                    gap: 1rem;
-                  }
-                app-product-card{
-                    width: 23.5%;
-                   
-                      @include  screen-media-max(lg){
-                        width: 48.5%;
-                      }
-                      @include  screen-media-max(md){
-                        width: 47%;
-                      }
-                }
-            }
-            
+        flex-wrap: wrap;
+        position: relative;
+        gap: 1.7rem;
+        width: 100%;
+      
+       
+        @include screen-media-max(md) {
+          gap: 1rem;
         }
-        .search-wrap{
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            @include  screen-media-max(md){
-                flex-direction: column-reverse;
-                gap: 0.5rem;
-            }
+        @include screen-media-max(xl) {
+          gap: 1rem;
+        }
+        app-product-card {
+          width: 23.5%;
 
-            h1{
-                margin: 0;
-                font-size: 1.5rem;
-                color: var(--text-color-1);
-                @include  screen-media-max(md){
-                    font-size: 1rem;
-                    margin-right: auto;
-                    margin-top: 0.2rem;
-                    color: var(--text-color-2);
-                    font-weight: 500;
-                }
-            }
-
-            .search-bar{
-                width: 40%;
-                display: flex;
-                position: relative;
-                padding: 0;
-                @include  screen-media-max(md){
-                    width: 100%;
-                }
-                i{
-                    position: absolute;
-                    left: 1rem;
-                    top: 50%;
-                    transform: translateY(-50%);
-                    color: var(--text-color-1);
-                }
-                input{
-                    width: 100%;
-                    padding: 0.8rem 2.5rem;
-                    border-radius: 10px;
-                    border: 1px solid rgba(0, 0, 0, 0.1);
-                    font-size: 0.88rem;
-                    color: var(--text-color-1);
-                    font-weight: 500;
-                }
-            }
+          @include screen-media-max(lg) {
+            width: 48.5%;
+          }
+          @include screen-media-max(md) {
+            width: 47%;
+          }
         }
-        .no-data{
-            font-size: 2rem;
-            font-weight: 500;
-            color: var(--text-color-1);
-            margin: auto;
-            text-align: center;
-            margin-top: 2rem;
-        }
+      }
     }
-    
+    .search-wrap {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      @include screen-media-max(md) {
+        flex-direction: column-reverse;
+        gap: 0.5rem;
+      }
+
+      h1 {
+        margin: 0;
+        font-size: 1.5rem;
+        color: var(--text-color-1);
+        @include screen-media-max(md) {
+          font-size: 1rem;
+          margin-right: auto;
+          margin-top: 0.2rem;
+          color: var(--text-color-2);
+          font-weight: 500;
+        }
+      }
+
+      .search-bar {
+        width: 40%;
+        display: flex;
+        position: relative;
+        padding: 0;
+        @include screen-media-max(md) {
+          width: 100%;
+        }
+        i {
+          position: absolute;
+          left: 1rem;
+          top: 50%;
+          transform: translateY(-50%);
+          color: var(--text-color-1);
+        }
+        input {
+          width: 100%;
+          padding: 0.8rem 2.5rem;
+          border-radius: 10px;
+          border: 1px solid rgba(0, 0, 0, 0.1);
+          font-size: 0.88rem;
+          color: var(--text-color-1);
+          font-weight: 500;
+        }
+      }
+    }
+    .no-data {
+      font-size: 2rem;
+      font-weight: 500;
+      color: var(--text-color-1);
+      margin: auto;
+      text-align: center;
+      margin-top: 2rem;
+    }
+  }
 }

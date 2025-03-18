@@ -17,7 +17,7 @@
 
         <div *ngIf="productList.length > 0" class="product-list">
             <app-loading-spinner *ngIf="isLoading || isSearching"></app-loading-spinner>
-            <div class="wrapper" *ngIf="!isSearching ">
+            <div class="wrapper" [class.show]="!isSearching" *ngIf="!isSearching ">
                 <app-product-card *ngFor="let product of productList" [product]="product"></app-product-card>
             </div>
         </div>

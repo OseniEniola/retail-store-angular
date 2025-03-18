@@ -12,7 +12,7 @@ import { FormsModule } from '@angular/forms';
   declarations: [NavBarComponent,FooterComponent,ProductCardComponent,LoadingSpinnerComponent,CartWidgetComponent],
   imports: [
     CommonModule,
-    FormsModule
+    FormsModule,
 ],
   exports: [NavBarComponent,FooterComponent,ProductCardComponent,LoadingSpinnerComponent,CartWidgetComponent,FormsModule]
 })

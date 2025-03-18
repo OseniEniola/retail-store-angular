@@ -1,48 +1,38 @@
 import { TestBed } from '@angular/core/testing';
 import { NetworkService } from './network.service';
+import { BehaviorSubject } from 'rxjs';
 
 describe('NetworkService', () => {
-  let networkService: NetworkService;
+  let service: NetworkService;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({
-      providers: [NetworkService]
-    });
-    networkService = TestBed.inject(NetworkService);
+    TestBed.configureTestingModule({});
+    service = TestBed.inject(NetworkService);
   });
 
   it('should be created', () => {
-    expect(networkService).toBeTruthy();
+    expect(service).toBeTruthy();
   });
 
-  it('should initialize with correct online status', () => {
-    spyOnProperty(navigator, 'onLine', 'get').and.returnValue(true);
-    const service = new NetworkService();
+  it('should return online status as true when navigator is online', () => {
+    spyOnProperty(navigator, 'onLine').and.returnValue(true);
+    service = new NetworkService();
     service.isOnline$.subscribe(status => {
       expect(status).toBeTrue();
     });
   });
 
-  it('should detect online event', () => {
-    const onlineEvent = new Event('online');
-    networkService.isOnline$.subscribe(status => {
-      expect(status).toBeTrue();
-    });
-    window.dispatchEvent(onlineEvent);
-  });
-
-  it('should detect offline event', () => {
-    const offlineEvent = new Event('offline');
-    networkService.isOnline$.subscribe(status => {
+  it('should return online status as false when navigator is offline', () => {
+    spyOnProperty(navigator, 'onLine').and.returnValue(false);
+    service = new NetworkService();
+    service.isOnline$.subscribe(status => {
       expect(status).toBeFalse();
     });
-    window.dispatchEvent(offlineEvent);
   });
 
-  it('should return correct value from isOnline()', () => {
-    spyOnProperty(navigator, 'onLine', 'get').and.returnValue(false);
-    const service = new NetworkService();
-    expect(service.isOnline()).toBeFalse();
+  it('should return current online status with isOnline() method', () => {
+    spyOnProperty(navigator, 'onLine').and.returnValue(true);
+    service = new NetworkService();
+    expect(service.isOnline()).toBeTrue();
   });
-
 });

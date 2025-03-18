@@ -29,8 +29,11 @@
 
     <div class="footer">
         <div class="promo">
-            <input [(ngModel)]="discountCode" type="text" placeholder="Enter promo code" />
-            <button (click)="validateDiscountCode(discountCode)">Apply</button>
+            <input [disabled]="discountObj.code" [(ngModel)]="discountCode" type="text" placeholder="Enter promo code" />
+            <div class="btn-wrap">
+                <button class="clear" (click)="clearDiscount()">Clear</button>
+                <button [disabled]="discountObj.code" (click)="validateDiscountCode(discountCode)">Apply</button>
+            </div>
         </div>
         <div class="breakdown">
             <div class="item">

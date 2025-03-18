@@ -186,6 +186,10 @@
 
     .promo {
       position: relative;
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+
       input {
         margin: 0;
         width: -webkit-fill-available;
@@ -195,21 +199,37 @@
         font-size: 0.88rem;
         color: var(--text-color-1);
         font-weight: 500;
+        &:disabled{
+          background-color: #ddd;
+          border: none;
+          color: var(--white);
+        }
       }
-      button {
-        position: absolute;
-        right: 2%;
-        top: 50%;
-        transform: translateY(-50%);
-        padding: 0.6rem 1.2rem;
-        border-radius: 7px;
-        font-size: 0.77rem;
-        border: none;
-        background-color: var(--deep-blue);
-        color: var(--white);
-        font-weight: 400;
-        cursor: pointer;
+      .btn-wrap{
+        display: flex;
+        justify-content: space-between;
+        button {
+          width: 45%;
+          //transform: translateY(-50%);
+          padding: 0.6rem 1.2rem;
+          border-radius: 7px;
+          font-size: 0.77rem;
+          border: none;
+          background-color: var(--deep-blue);
+          color: var(--white);
+          font-weight: 400;
+          cursor: pointer;
+
+          &.clear{
+            background-color: var(--red);
+          }
+
+          &:disabled{
+            background-color: #ddd;
+          }
+        }
       }
+      
     }
 
     .breakdown {

@@ -30,10 +30,17 @@
       .content-wrapper{
         position: relative;
         z-index: 3;
-        height: 100vh;
+        height: auto;
+        min-height: 100vh;
         display: flex;
         flex-direction: column;
       
+      }
+
+      app-nav-bar{
+        position: sticky;
+        top: 0;
+        z-index: 5;
       }
 
       app-footer{

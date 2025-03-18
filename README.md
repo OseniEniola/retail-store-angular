@@ -2,13 +2,21 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.2.14.
 
-## Development server
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+### 1. Clone the Repository
 
-## Code scaffolding
+Clone the repository using the following command:
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+git clone https://github.com/OseniEniola/retail-store-angular
+
+cd SavannahTechApp
+
+### 2. Instal dependencies
+
+npm run install
+
+### 3. Run application
+npm run start
 
 ## Build
 
@@ -18,9 +26,10 @@ Run `ng build` to build the project. The build artifacts will be stored in the `
 
 Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
 
-## Running end-to-end tests
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+### Live Link
+https://savannahtech-retail-store.netlify.app/product/list
+
 
 ## Features and Technologies Used
 
@@ -40,9 +49,3 @@ Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To u
 - **Product Service**: A service for fetching product data from the Fake Store API.
 
 
-## Setting up for Development
-
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/OseniEniola/retail-store-angular
-   cd SavannahTechApp
