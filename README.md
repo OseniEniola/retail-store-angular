@@ -28,7 +28,7 @@ Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.
 
 
 ### Live Link
-https://savannahtech-retail-store.netlify.app/product/list
+https://savannahtech-retail-store.netlify.app/
 
 
 ## Features and Technologies Used
