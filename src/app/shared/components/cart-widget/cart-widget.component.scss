@@ -33,6 +33,8 @@
     width: 30%;
     @include  screen-media-max(md){
        width: 100%;
+       height: 95vh;
+       overflow-y: auto;
        padding-bottom: 2rem;
       }
   }
